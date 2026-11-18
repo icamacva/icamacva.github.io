@@ -10,7 +10,7 @@ window.SITE = {
   owner: "Nacho",
   title: "Mis aplicaciones",
   tagline: "Apps sencillas y útiles para el día a día. Descárgalas gratis para Android o úsalas en el iPhone.",
-  about: "Desarrollador de aplicaciones desde 2011. Técnico Superior en Desarrollo de Aplicaciones Multiplataforma.",
+  about: "Desarrollando y dirigiendo desde 2011. Project Manager y experto en análisis y desarrollo de software.",
   contactEmail: "",        // p. ej. "nacho@tucorreo.com" (opcional)
 };
 
