@@ -39,13 +39,14 @@ window.APPS = [
     updated: "2026-11-18",
     changelog: ["Primera versión de prueba."],
     android: {
-      apk: "descargas/MiRegistro-Stimulo-1.0.apk",   // sube aquí el APK con este nombre
-      size: "",                                      // p. ej. "5 MB"
-      sha256: "",                                    // huella del APK (opcional, ver README)
+      apk: "descargas/MiRegistro-Stimulo-1.0.apk",
+      size: "5,6 MB",
+      sha256: "7e75c2b34a66db6b487bdb5ac43b18a01c07a051116bc6019fd3c9379cd6a71d",
       play: "",                                      // enlace de Google Play cuando esté publicada
     },
     ios: {
       web: "mi-registro/app/",                       // versión para iPhone (navegador)
+      keepsData: true,                               // guarda datos en el móvil (muestra el aviso de abrirla desde el icono)
       appStore: "",
     },
     privacy: "mi-registro/app/privacidad.html",
@@ -57,23 +58,41 @@ window.APPS = [
   },
   {
     id: "farmacias-guardia",
-    name: "Farmacias de Guardia",
+    name: "Farmacias Guardia Los Santos",
     by: "Los Santos de Maimona",
-    status: "soon",
-    icon: "",                                        // apps/farmacias-guardia/icon.png cuando lo tengas
-    color: "#2B6CB0",
-    tint: "#E8F0FA",
-    short: "Consulta de un vistazo qué farmacia está de guardia hoy en nuestro pueblo.",
+    status: "beta",
+    icon: "apps/farmacias-guardia/icon.png",
+    color: "#006845",
+    tint: "#E3F4EC",
+    short: "La farmacia de guardia de hoy en Los Santos de Maimona, con dirección, teléfono y llamada con un toque.",
     description: [
-      "La farmacia de guardia de hoy, a un toque.",
+      "Abre la app y consulta en segundos qué farmacia está de guardia hoy en nuestro pueblo: nombre, dirección y teléfono, con un botón para llamar directamente.",
+      "Las farmacias de la localidad se turnan cada semana y el cambio de guardia es los viernes a las 9:00. El calendario es orientativo: ante cualquier duda, confirma por teléfono con la farmacia. Es una aplicación independiente y no oficial.",
     ],
-    features: [],
-    version: "",
+    features: [
+      "La farmacia de guardia de esta semana, la anterior y las siguientes",
+      "Llamada a la farmacia con un solo toque",
+      "Funciona sin conexión a internet (en iPhone, después de abrirla la primera vez)",
+      "Sin registro ni permisos",
+      "No recoge ni comparte datos personales",
+      "Tema claro u oscuro",
+    ],
+    version: "1.0",
     updated: "",
-    changelog: [],
-    android: { apk: "", size: "", sha256: "", play: "" },
-    ios: { web: "", appStore: "" },
-    privacy: "",
-    screenshots: [],
+    changelog: ["Primera versión: la farmacia de guardia de esta semana, la anterior y la siguiente, con dirección y teléfono."],
+    android: {
+      apk: "descargas/FarmaciasGuardia-LosSantos-1.0.apk",
+      size: "4,4 MB",
+      sha256: "bebe4792de8d5215f3a8254cf27c5b40cd6c7c5994b74736b98add8db77081e0",
+      play: "",                                              // enlace de Google Play cuando salga a producción
+    },
+    ios: { web: "farmacias/app/", appStore: "" },
+    privacy: "https://sites.google.com/view/farmacias-guardia-privacidad",
+    screenshots: [
+      "apps/farmacias-guardia/captura-1.png",
+      "apps/farmacias-guardia/captura-2.png",
+      "apps/farmacias-guardia/captura-3.png",
+      "apps/farmacias-guardia/captura-4.png",
+    ],
   },
 ];

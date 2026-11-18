@@ -42,6 +42,10 @@ Para editar un archivo directamente en GitHub, ábrelo, pulsa el lápiz ✏️ y
 4. Con `status: "soon"` sale como «Próximamente»; con `"beta"`, como «En pruebas»; con `"ok"`, normal.
 5. Cuando esté en Google Play, pon el enlace en `android.play` y el botón principal pasa a ser el de Google Play.
 
+## Versión iPhone de Farmacias Guardia
+
+Está en `farmacias/app/` y es una copia de la carpeta `www` del proyecto de farmacias, con lo necesario para instalarla desde Safari (`manifest.webmanifest`, `sw.js` e iconos). Si cambias el calendario o las farmacias en el proyecto, copia de nuevo `index.html`, `assets/` y `fonts/` y sube el número de `VERSION` en `farmacias/app/sw.js`. Ojo: al copiar `index.html` se pierden las líneas añadidas para el iPhone (las de `manifest`, `apple-touch-icon` y el registro de `sw.js`), así que vuelve a ponerlas o pídeme que lo haga.
+
 ## Actualizar la versión iPhone de Mi registro
 
 1. Copia el contenido de `www/` del proyecto `stimulo-mi-registro` dentro de `mi-registro/app/`, sustituyendo lo que haya.

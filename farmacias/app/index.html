@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00955D">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Farmacias">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>Farmacia de Guardia · Los Santos de Maimona</title>
+  <style>
+    /* Tipografías incluidas en la app (licencia SIL OFL): sin conexión a Google Fonts */
+    @font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 700; font-display: swap; src: url('fonts/playfair-display-latin-700-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 900; font-display: swap; src: url('fonts/playfair-display-latin-900-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap; src: url('fonts/inter-latin-300-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/inter-latin-400-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/inter-latin-500-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/inter-latin-600-normal.woff2') format('woff2'); }
+
+    :root {
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+      --ease:  cubic-bezier(0.16, 1, 0.3, 1);
+      --bg:      #F2EFE9;
+      --surface: #FFFFFF;
+      --text:    #1A1714;
+      --muted:   #7A7368;
+      --faint:   #C8C3BB;
+      --border:  rgba(0,0,0,0.07);
+      --gold:    #C09B2E;
+      --gold-bg: rgba(192,155,46,0.10);
+    }
+    [data-theme="dark"] {
+      --bg:      #121009;
+      --surface: #1C1A14;
+      --text:    #EDE9DF;
+      --muted:   #8A8375;
+      --faint:   #302D27;
+      --border:  rgba(255,255,255,0.07);
+      --gold:    #D4AA3E;
+      --gold-bg: rgba(212,170,62,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+    }
+    .app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 32px;
+    }
+
+    /* ══ HERO ══ */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      transition: background 500ms var(--ease);
+      padding-bottom: 32px;
+    }
+
+    /* Círculos decorativos */
+    .hero-deco {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-deco-1 {
+      width: 300px; height: 300px;
+      top: -120px; right: -80px;
+      background: rgba(255,255,255,0.07);
+    }
+    .hero-deco-2 {
+      width: 200px; height: 200px;
+      bottom: -60px; left: -50px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* Top bar: solo botón tema, alineado a la derecha */
+    .hero-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px 0;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-app-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+    .theme-btn {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.8);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 150ms;
+    }
+    .theme-btn:hover { background: rgba(255,255,255,0.22); }
+
+/* IMAGEN DE FACHADA — protagonista central */
+    .hero-escudo-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px 24px; /* Ajustamos márgenes para dar respiro */
+      position: relative;
+      z-index: 2;
+    }
+    .hero-escudo {
+      width: 100%;           /* Ocupa todo el ancho disponible */
+      max-width: 360px;      /* Tope máximo para mantener proporciones */
+      height: 220px;         /* Formato apaisado ideal para fachadas */
+      border-radius: 24px;   /* Esquinas redondeadas estilo tarjeta, no círculo */
+      overflow: hidden;
+      border: 3px solid rgba(255,255,255,0.4);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.12),
+        0 16px 40px rgba(0,0,0,0.25),
+        0 8px 16px rgba(0,0,0,0.15);
+      background: white;
+      flex-shrink: 0;
+      transition: box-shadow 500ms var(--ease);
+    }
+    .hero-escudo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;     /* Rellena el espacio sin distorsionar la foto */
+      object-position: center;
+      /* Se elimina el scale() para no recortar la imagen de más */
+    }
+
+    /* Texto bajo el escudo */
+    .hero-body {
+      text-align: center;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-loc {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 6px;
+    }
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 8px;
+    }
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 6vw, 2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 18px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+    .hero-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+    }
+    .hero-date svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    /* ══ TARJETA FLOTANTE INFO ══ */
+    .info-card {
+      background: var(--surface);
+      margin: -20px 14px 0;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.04), 0 12px 32px rgba(0,0,0,0.10);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+    .info-rows {
+      padding: 20px 20px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .info-icon svg { width: 17px; height: 17px; }
+    .info-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .info-val {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.35;
+      margin-top: 1px;
+    }
+    .btn-call {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 16px;
+      padding: 15px;
+      border-radius: 14px;
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: 150ms var(--ease);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    }
+    .btn-call svg { width: 18px; height: 18px; }
+    .btn-call:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-call:active { transform: translateY(0); filter: brightness(0.95); }
+
+    /* ══ WEEK BADGE ══ */
+    .week-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 14px 14px 0;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      border: 1.5px solid;
+    }
+    .week-badge svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+    /* ══ NAV SEMANAS ══ */
+    .week-nav {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 14px 0;
+    }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-family: var(--sans);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: 140ms var(--ease);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      white-space: nowrap;
+    }
+    .nav-btn:hover { color: var(--text); box-shadow: 0 2px 10px rgba(0,0,0,0.10); transform: translateY(-1px); }
+    .nav-btn:active { transform: translateY(0); }
+    .nav-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .nav-btn.right { justify-content: flex-end; }
+    .nav-center {
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+    }
+    .nav-dots { display: flex; gap: 5px; }
+    .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--faint);
+      transition: 250ms var(--ease);
+    }
+    .dot.on { width: 16px; border-radius: 3px; }
+    .nav-lbl {
+      font-size: 9.5px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ══ NOTA ══ */
+    .note {
+      margin: 14px 14px 0;
+      padding: 14px 16px;
+      background: var(--gold-bg);
+      border: 1px solid rgba(192,155,46,0.2);
+      border-radius: 14px;
+    }
+    .note-inner {
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .note svg {
+      width: 15px; height: 15px;
+      color: var(--gold); flex-shrink: 0; margin-top: 2px;
+    }
+    .note p {
+      font-size: 12.5px; color: var(--muted); line-height: 1.6;
+    }
+    .note strong { color: var(--text); font-weight: 600; }
+    .note .note-aviso {
+      margin-top: 10px; padding-top: 10px;
+      border-top: 1px solid rgba(192,155,46,0.2);
+      font-size: 11.5px;
+    }
+
+    .footer {
+      text-align: center; font-size: 11px; color: var(--faint);
+      padding: 20px 16px 0;
+    }
+    .footer a.privacy-link {
+      display: inline-block; margin-top: 6px; color: var(--muted);
+      text-decoration: underline; text-underline-offset: 2px;
+    }
+
+    /* ══ ANIMACIONES ══ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero { animation: fadeUp 0.5s var(--ease) both; }
+    .info-card { animation: fadeUp 0.55s 0.06s var(--ease) both; }
+    .hero.pop { animation: fadeUp 0.32s var(--ease) both; }
+    .info-card.pop { animation: fadeUp 0.32s 0.04s var(--ease) both; }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HERO -->
+  <div class="hero" id="hero">
+    <div class="hero-deco hero-deco-1"></div>
+    <div class="hero-deco hero-deco-2"></div>
+
+    <div class="hero-topbar">
+      <span class="hero-app-label">Farmacias de Guardia</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Cambiar tema">
+        <svg id="themeIcon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- IMAGEN FARMACIA -->
+    <div class="hero-escudo-wrap">
+      <div class="hero-escudo" id="heroEscudo">
+        <img id="imagenFarmacia" src="" alt="Fachada de la farmacia">
+      </div>
+    </div>
+
+    <!-- Texto -->
+    <div class="hero-body">
+      <div class="hero-loc">Los Santos de Maimona</div>
+      <div class="hero-eyebrow" id="heroEyebrow">Farmacia de guardia hoy</div>
+      <div class="hero-name" id="heroName">—</div>
+      <div class="hero-date">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        <span id="dateText"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARJETA INFO -->
+  <div class="info-card" id="infoCard">
+    <div class="info-rows">
+      <div class="info-row">
+        <div class="info-icon" id="iconAddr">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="info-label">Dirección</div>
+          <div class="info-val" id="cardAddr">—</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon" id="iconPhone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.59 3.38 2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16h-.08"/>
+          </svg>
+        </div>
+        <div>
+          <div class="info-label">Teléfono</div>
+          <div class="info-val" id="cardPhone">—</div>
+        </div>
+      </div>
+    </div>
+    <a class="btn-call" id="btnCall" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.59 3.38 2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16h-.08"/>
+      </svg>
+      Llamar ahora
+    </a>
+  </div>
+
+  <!-- WEEK BADGE -->
+  <div class="week-badge" id="weekBadge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="4" width="18" height="18" rx="2"/>
+      <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+      <line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+    <span id="weekRange">—</span>
+  </div>
+
+  <!-- NAV SEMANAS -->
+  <div class="week-nav">
+    <button class="nav-btn" onclick="changeWeek(-1)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Anterior
+    </button>
+    <div class="nav-center">
+      <div class="nav-dots">
+        <div class="dot" id="d0"></div>
+        <div class="dot on" id="d1"></div>
+        <div class="dot" id="d2"></div>
+      </div>
+      <div class="nav-lbl" id="navLbl">Esta semana</div>
+    </div>
+    <button class="nav-btn right" onclick="changeWeek(1)">
+      Siguiente
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <!-- NOTA -->
+  <div class="note">
+    <div class="note-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <p>El cambio de guardia se produce <strong>los viernes a las 9:00&nbsp;h</strong></p>
+    </div>
+    <p class="note-aviso">Calendario orientativo: ante cualquier duda, confirma por teléfono con la farmacia. Aplicación independiente, no oficial.</p>
+  </div>
+
+  <div class="footer">Ignacio Camacho Valle - Los Santos de Maimona<br><a class="privacy-link" href="https://sites.google.com/view/farmacias-guardia-privacidad" target="_blank" rel="noopener">Política de privacidad</a></div>
+</div>
+
+<script>
+const farmacias = {
+  amarillo: { 
+    name:"Farmacia Beatriz Gómez Munuera", 
+    addr:"Calle Sevilla, 15", 
+    phone:"924 54 48 08", 
+    color:"#E07B00", 
+    light:"rgba(224,123,0,0.13)", 
+    soft:"rgba(224,123,0,0.2)",
+    imagen: "assets/gomez munuera.jpg"
+  },
+  verde: { 
+    name:"Farmacia García Cotano", 
+    addr:"Av. Diego Hidalgo Durán, 68", 
+    phone:"924 54 41 85", 
+    color:"#00875A", 
+    light:"rgba(0,135,90,0.13)", 
+    soft:"rgba(0,135,90,0.2)",
+    imagen: "assets/garcia cotano.jpg"
+  },
+  rojo: { 
+    name:"Farmacia Sáez González", 
+    addr:"Calle Sevilla, 2", 
+    phone:"924 54 44 04", 
+    color:"#D92B2B", 
+    light:"rgba(217,43,43,0.13)", 
+    soft:"rgba(217,43,43,0.2)",
+    imagen: "assets/saez fajardo.png"
+  },
+  azul: { 
+    name:"Farmacia Manuel Fernández Mena", 
+    addr:"Calle Mérida, 81", 
+    phone:"924 57 13 18", 
+    color:"#1B4FD8", 
+    light:"rgba(27,79,216,0.13)", 
+    soft:"rgba(27,79,216,0.2)",
+    imagen: "assets/fernandez mena.jpg"
+  },
+};
+
+const ordenRotacion = ['rojo', 'azul', 'amarillo', 'verde'];
+
+// Generación automática de guardias hasta el año indicado
+function generarGuardias(anioFin) {
+  const guardiasGeneradas = [];
+
+  // Arrancamos el ciclo en el último viernes de 2025 (26 de diciembre)
+  let fechaActual = new Date(2025, 11, 26); 
+  let indiceFarmacia = 3; // 'verde'
+
+  const formatoFecha = (d) => {
+    const anio = d.getFullYear();
+    const mes = String(d.getMonth() + 1).padStart(2, '0');
+    const dia = String(d.getDate()).padStart(2, '0');
+    return `${anio}-${mes}-${dia}`;
+  };
+
+  while (fechaActual.getFullYear() <= anioFin) {
+    let fechaFin = new Date(fechaActual);
+    fechaFin.setDate(fechaActual.getDate() + 6); // Acaba el jueves
+
+    guardiasGeneradas.push([
+      formatoFecha(fechaActual),
+      formatoFecha(fechaFin),
+      ordenRotacion[indiceFarmacia % ordenRotacion.length]
+    ]);
+
+    // Avanzamos 7 días al siguiente viernes
+    fechaActual.setDate(fechaActual.getDate() + 7);
+    indiceFarmacia++;
+  }
+
+  return guardiasGeneradas;
+}
+
+// Calculamos automáticamente los próximos años
+const guardias = generarGuardias(2035);
+
+let offset = 0;
+function toISO(d) { return d.toISOString().slice(0,10); }
+
+// Solución para parseo local exacto
+function parseISO(s) { 
+  const [y,m,d] = s.split('-').map(Number); 
+  return new Date(y, m-1, d); 
+}
+
+// La guardia cambia los viernes a las 9:00 h: restamos 9 horas para que
+// el viernes entre las 0:00 y las 8:59 siga mostrándose la farmacia saliente.
+const HORA_CAMBIO_GUARDIA = 9;
+function getViewDate() {
+  const d = new Date();
+  d.setDate(d.getDate() + offset * 7);
+  d.setHours(d.getHours() - HORA_CAMBIO_GUARDIA);
+  return d;
+}
+
+function findGuardia(iso) { 
+  return guardias.find(([i,f]) => iso >= i && iso <= f) || null; 
+}
+
+function fmtLong(d) { 
+  return d.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long', year:'numeric'}); 
+}
+
+function fmtShort(d) { 
+  return d.toLocaleDateString('es-ES', {day:'numeric', month:'short'}); 
+}
+
+function darken(hex, pct) {
+  const n = parseInt(hex.slice(1), 16);
+  const r = Math.max(0, (n>>16) - pct), 
+        g = Math.max(0, ((n>>8)&0xff) - pct), 
+        b = Math.max(0, (n&0xff) - pct);
+  return '#' + (r<<16 | g<<8 | b).toString(16).padStart(6, '0');
+}
+
+function render() {
+  document.getElementById('dateText').textContent = `Hoy es ${fmtLong(new Date())}`;
+  
+  const fechaVista = getViewDate();
+  // Al buscar el turno, compensamos el desfase horario si se busca a medianoche en el toISO
+  // Construyendo manualmente la fecha ISO local evitamos bugs
+  const anio = fechaVista.getFullYear();
+  const mes = String(fechaVista.getMonth() + 1).padStart(2, '0');
+  const dia = String(fechaVista.getDate()).padStart(2, '0');
+  const isoLocal = `${anio}-${mes}-${dia}`;
+  
+  const g = findGuardia(isoLocal);
+  if (!g) return;
+  const [ini, fin, key] = g;
+  const f = farmacias[key];
+
+  // Eyebrow
+  const e = offset === 0 ? 'Farmacia de guardia hoy' : offset === 1 ? 'Semana siguiente' : offset === -1 ? 'Semana anterior' : offset > 1 ? `${offset} semanas adelante` : `${Math.abs(offset)} semanas atrás`;
+  document.getElementById('heroEyebrow').textContent = e;
+  document.getElementById('heroName').textContent = f.name;
+
+  // NUEVO: Asignar imagen dinámica
+  document.getElementById('imagenFarmacia').src = f.imagen;
+
+  // Fondo hero
+  document.getElementById('hero').style.background =
+    `linear-gradient(155deg, ${f.color} 0%, ${darken(f.color,35)} 100%)`;
+
+  // Glow escudo
+  document.getElementById('heroEscudo').style.boxShadow =
+    `0 0 0 1px rgba(255,255,255,0.15), 0 12px 40px rgba(0,0,0,0.35), 0 0 40px ${f.color}60`;
+
+  // Info
+  ['iconAddr','iconPhone'].forEach(id => {
+    document.getElementById(id).style.background = f.light;
+    document.getElementById(id).style.color = f.color;
+  });
+  document.getElementById('cardAddr').textContent = f.addr;
+  document.getElementById('cardPhone').textContent = f.phone;
+
+  const btn = document.getElementById('btnCall');
+  btn.style.background = `linear-gradient(135deg, ${f.color}, ${darken(f.color,28)})`;
+  btn.href = `tel:${f.phone.replace(/\s/g,'')}`;
+
+  const badge = document.getElementById('weekBadge');
+  badge.style.color = f.color;
+  badge.style.borderColor = f.soft;
+  badge.style.background = f.light;
+  document.getElementById('weekRange').textContent = `${fmtShort(parseISO(ini))} — ${fmtShort(parseISO(fin))}`;
+
+  ['d0','d1','d2'].forEach((id,i) => {
+    const on = (i===0 && offset<0) || (i===1 && offset===0) || (i===2 && offset>0);
+    const el = document.getElementById(id);
+    el.classList.toggle('on', on);
+    el.style.background = on ? f.color : '';
+  });
+  
+  document.getElementById('navLbl').textContent =
+    offset === 0 ? 'Esta semana' : offset === 1 ? 'Siguiente' : offset === -1 ? 'Anterior' : offset > 0 ? `+${offset} sem.` : `${offset} sem.`;
+}
+
+function changeWeek(d) {
+  offset += d;
+  ['hero','infoCard'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+  });
+  render();
+}
+
+(function() {
+  const btn = document.getElementById('themeBtn'), icon = document.getElementById('themeIcon');
+  const html = document.documentElement;
+  let dark = matchMedia('(prefers-color-scheme:dark)').matches;
+  html.dataset.theme = dark ? 'dark' : 'light';
+  function sync() {
+    icon.innerHTML = dark
+      ? '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
+      : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  }
+  sync();
+  btn.addEventListener('click', () => { dark = !dark; html.dataset.theme = dark ? 'dark' : 'light'; sync(); });
+})();
+
+render();
+</script>
+<script>
+  // Versión web (iPhone): funciona sin conexión tras la primera visita
+  if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(function(){});
+</script>
+</body>
+</html>

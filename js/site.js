@@ -22,7 +22,7 @@
     chev: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>',
   };
 
-  const iconHTML = (a) => `<div class="icon">${a.icon ? `<img src="${esc(a.icon)}" alt="">` : `<span class="ph">${esc(a.name.charAt(0))}</span>`}</div>`;
+  const iconHTML = (a) => `<div class="icon"><span class="ph">${esc(a.name.charAt(0))}</span>${a.icon ? `<img src="${esc(a.icon)}" alt="" onerror="this.remove()">` : ""}</div>`;
   const hasAndroid = (a) => !!(a.android && (a.android.apk || a.android.play));
   const hasIOS = (a) => !!(a.ios && (a.ios.web || a.ios.appStore));
   function badges(a) {
@@ -84,7 +84,7 @@
         <li><span>Ábrela con <b>Safari</b> (no desde Instagram, WhatsApp ni otro navegador).</span></li>
         <li><span>Pulsa el botón <b>Compartir</b> ${ICO.share} de la barra de Safari.</span></li>
         <li><span>Elige <b>Añadir a pantalla de inicio</b> ${ICO.addhome} y pulsa <b>Añadir</b>.</span></li>
-        <li><span>Ábrela siempre desde ese icono: ahí se guardan tus datos.</span></li>
+        ${I.keepsData ? `<li><span>Ábrela siempre desde ese icono: ahí se guardan tus datos.</span></li>` : ""}
       </ol>`;
     return `<div class="plat"><h3>${ICO.apple}iPhone</h3>${rows.join("")}${steps}</div>`;
   }
