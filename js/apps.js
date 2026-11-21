@@ -11,7 +11,7 @@ window.SITE = {
   title: "Mis aplicaciones",
   tagline: "Apps sencillas y útiles para el día a día.",   // una sola frase corta: la portada ya dice que son gratis para Android e iPhone
   about: "Desarrollando y dirigiendo desde 2011. Project Manager y experto en análisis y desarrollo de software.",
-  contactEmail: "",        // p. ej. "nacho@tucorreo.com" (opcional)
+  contactEmail: "ignacionntt84@gmail.com",
 };
 
 window.APPS = [
