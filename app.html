@@ -4,17 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>App</title>
+<meta name="description" content="Descarga gratis la app para Android o úsala en el iPhone.">
 <link rel="icon" href="img/favicon.png">
+<link rel="preload" href="fonts/prata-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body data-page="app">
-<div class="wrap">
-  <header class="top">
-    <a class="brand" href="./"><span class="mono" data-mono></span><span><b data-owner></b><span data-sitetitle></span></span></a>
-  </header>
-  <main id="app"></main>
-  <footer><span>© <span id="year"></span> <span data-owner></span></span><span id="contact"></span></footer>
-</div>
+<header class="top">
+  <div class="container">
+    <a class="brand" href="./"><span class="mono" data-mono aria-hidden="true">N</span><span class="brand-name"><b data-owner>Nacho</b><span data-sitetitle>Mis aplicaciones</span></span></a>
+  </div>
+</header>
+<main id="app">
+  <noscript><section class="missing"><div class="container"><h1>Activa JavaScript</h1><p>Esta ficha necesita JavaScript para mostrarse. <a href="./">Ver todas las apps</a></p></div></section></noscript>
+</main>
+<footer>
+  <div class="container"><div class="foot"><span>© <span id="year">2026</span> <span data-owner>Nacho</span></span><span id="contact"></span></div></div>
+</footer>
 <script src="js/vendor/qrcode.js"></script>
 <script src="js/apps.js"></script>
 <script src="js/site.js"></script>
